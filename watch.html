@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue JS Learning</title>
+		<script src="vuejs/vue.min.js"></script>
+	</head>
+
+	<body>
+		<div id="vue-vm">
+			<h4>{{author}}</h4>
+
+			<div>
+				<span>Calculation</span>
+				<input type="text" name="first_data" v-model="firstData">
+				<input type="text" name="last_data" v-model="lastData">
+				= {{summation}}
+
+				<h4>History</h4>
+				<div v-for="data in getHistories">
+					{{data.time}} : {{data.firstData}} + {{data.lastData}} = {{data.summation}}
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var apps = new Vue({
+			el: '#vue-vm',
+			data: {
+				author: 'Hasibul Islam',
+				firstData: 0,
+				lastData: 0,
+				histories: []
+			},
+			computed: {
+				summation: function() {
+					return Number(this.firstData) + Number(this.lastData)
+				},
+				getHistories: function() {
+					return this.histories.reverse()
+				}
+			}
+		})
+
+		apps.$watch('firstData', function(currentData, oldData){
+			this.histories.push({
+				time: new Date(),
+				firstData: oldData,
+				lastData: this.lastData,
+				summation: Number(oldData) + Number(this.lastData)
+			})
+		})
+
+		apps.$watch('lastData', function(currentData, oldData){
+			this.histories.push({
+				time: new Date(),
+				firstData: this.firstData,
+				lastData: oldData,
+				summation: Number(this.firstData) + Number(oldData)
+			})
+		})
+	</script>
+</html>
