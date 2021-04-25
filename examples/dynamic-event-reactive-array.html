@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue JS Learning</title>
+		<script src="../vuejs/vue.min.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<select v-model="event">
+				<option>click</option>
+				<option>input</option>
+				<option>focus</option>
+				<option>focusout</option>
+				<option>keypress</option>
+			</select>
+
+			<input type="text" name="event_test" @[event]="eventFired(event)">
+
+			<div>
+				<div v-for="(value, key) in countData">
+					{{key}} : {{value}}
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		let app = new Vue({
+			el: '#app',
+			data: {
+				event: '',
+				counter: {}
+			},
+			methods: {
+				eventFired: function (event) {
+					this.counter[event] += 1
+				}
+			},
+			watch: {
+				event: function(newData, old){
+					if(!this.counter.hasOwnProperty(newData)){
+						this.$set(this.counter, newData, 0)
+					}
+				}
+			},
+			computed: {
+				countData: function() {
+					return this.counter
+				}
+			}
+		})
+	</script>
+</html>
