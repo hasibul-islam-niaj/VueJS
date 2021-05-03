@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue JS Learning</title>
+		<script src="../vuejs/vue.min.js"></script>
+	</head>
+
+	<style type="text/css">
+		.default {
+			background: lightgray;
+		}
+
+		.orange {
+			background: orange;
+		}
+
+		.skyblue {
+			background: skyblue;
+		}
+
+		.blue: {
+			background: blue;
+		}
+
+		.purple {
+			background: purple;
+			color: white;
+		}
+
+		.pad-6-16 {
+			padding: 6px 16px;
+		}
+	</style>
+
+	<body>
+		<div id="app">
+			<button @click="changeCompanies()">Change</button>
+			<span class="default pad-6-16" 
+				:class="[getColor]">
+				{{getCompanies}}
+			</span>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				companies: [
+					'google',
+					'microsoft',
+					'facebook',
+					'tesla',
+					'apple'
+				],
+				index: 0
+			},
+			methods: {
+				changeCompanies: function(){
+					this.index += 1
+					if (this.index >= this.companies.length)
+						this.index = 0
+				}
+			},
+			computed: {
+				getCompanies: function() {
+					return this.companies[this.index].toUpperCase()
+				},
+				getColor: function() {
+					let color = 
+					this.companies[this.index].indexOf('oo') >= 0 ? 'orange' : 
+					this.companies[this.index].indexOf('tesla') >= 0 ? 
+					'purple' : '';
+
+					return color;
+				}
+			}
+
+		})
+	</script>
+</html>
